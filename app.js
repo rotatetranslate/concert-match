@@ -6,9 +6,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
-
+var rollbar = require('rollbar');
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var api = require('./routes/api');
 
 var app = express();
 
@@ -39,7 +39,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -49,6 +49,10 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
+// Use the rollbar error handler to send exceptions to your rollbar account
+// app.use(rollbar.errorHandler('aa5781e25c4e43c9b7ad3735ddf760f7'));
+
+// app.listen(6943);
 
 // development error handler
 // will print stacktrace
